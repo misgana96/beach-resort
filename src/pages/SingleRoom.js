@@ -3,11 +3,13 @@ import defaultBcg from "../images/room-1.jpeg";
 import Hero from '../components/Hero'
 import Banner from '../components/Banner'
 import {Link} from 'react-router-dom'
-import {RoomContext} from '../context'
+import { RoomContext } from "../context";
+import StyledHero from '../components/StyledHero'
 
 export default class SingleRoom extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
         this.state = {
             slug:this.props.match.params.slug,
             defaultBcg: defaultBcg
@@ -19,10 +21,36 @@ export default class SingleRoom extends Component {
         const { getRoom } = this.context;
         const room = getRoom(this.state.slug);
         console.log(room)
+        if (!room){
+            return (
+                <div className="error">
+                    <h3>no such type of room </h3>
+                    <Link to="/rooms" className="btn-primary">
+                        back to rooms
+                    </Link>
+
+                </div>
+            )
+        }
+        const{name, description, capacity, size, price, extras, breakfast, pets, images} = room
         return (
-            <div>
-                hello from singleroom page{room.name}
-            </div>
+            <>
+            <StyledHero img={images[0] || defaultBcg}>
+                <Banner title={`${name} room`}>
+                    <Link to ="/rooms" className="btn-primary">
+                        back to rooms
+                    </Link>
+
+                </Banner>
+            </StyledHero>
+            <section className="single-room">
+                <div className="single-room-images">
+                    {images.map((item, index)=>{
+                        return <img key={index} src={item} alt={name} />
+                    })}
+                </div>
+            </section>
+            </>
         )
     }
 }
