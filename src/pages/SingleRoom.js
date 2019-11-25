@@ -33,9 +33,11 @@ export default class SingleRoom extends Component {
             )
         }
         const{name, description, capacity, size, price, extras, breakfast, pets, images} = room
+        const[mainImage, ...defaultImg] = images
+        console.log(defaultImg)
         return (
             <>
-            <StyledHero img={images[0] || defaultBcg}>
+            <StyledHero img={mainImage[0] || defaultBcg}>
                 <Banner title={`${name} room`}>
                     <Link to ="/rooms" className="btn-primary">
                         back to rooms
@@ -45,10 +47,35 @@ export default class SingleRoom extends Component {
             </StyledHero>
             <section className="single-room">
                 <div className="single-room-images">
-                    {images.map((item, index)=>{
+                    {defaultImg.map((item, index)=>{
                         return <img key={index} src={item} alt={name} />
                     })}
                 </div>
+                <div className="single-room-info">
+                    <article className="desc">
+                        <h3>detail</h3>
+                        <p>{description}</p>
+                    </article>
+                    <article className="info">
+                        <h3>info</h3>
+                        <h6>price:${price}</h6>
+                        <h6>size:{size} SOFT</h6>
+                        <h6>
+                            max capacity:{""}
+                            {capacity >1? `${capacity} people`:`${capacity} person`}
+                        </h6>
+                        <h6>{pets? "pets allowed":"no pets allowed"}</h6>
+                        <h6>{breakfast && "free breakfast included"}</h6>
+                    </article>
+                </div>
+            </section>
+            <section className="room-extra">
+                <h6>extras</h6>
+                <ul className="extras">
+                    {extras.map((item, index)=>{
+                    return<li key={index}>- {item}</li>
+                    })}
+                </ul>
             </section>
             </>
         )
