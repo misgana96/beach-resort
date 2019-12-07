@@ -6,25 +6,20 @@ import Loading from '../components/Loading'
 
 function RoomContainer({context}){
     const{loading, sortedRooms, rooms} = context;
+    console.log(rooms)
     if(loading){
         return <Loading/>
     }
     return(
         <>
             <RoomFilter rooms ={rooms}/>
-            <RoomList sortedRooms ={rooms}/>
+            <RoomList rooms ={sortedRooms}/>
         </>
     )
 
 }
 
 export default withRoomConsumer(RoomContainer)
-
-
-
-
-
-
 
 // import React from 'react'
 // import RoomFilter from './RoomFilter'
